@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "261522670680",
+    "firebase_url": "https://segundatentativa-32f97-default-rtdb.firebaseio.com",
+    "project_id": "segundatentativa-32f97",
+    "storage_bucket": "segundatentativa-32f97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261522670680:android:fb56adf2455925d26cf62d",
+        "android_client_info": {
+          "package_name": "br.unigran.aulafirebase2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "261522670680-68tqkgoa1j12lkf3eoa6b3l9tifatvo2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.unigran.aulafirebase2",
+            "certificate_hash": "6fddba8807d55af20a0aa93972ab53910e54ac6c"
+          }
+        },
+        {
+          "client_id": "261522670680-quccnjsq8ds55luergu2aj3s8psbstbk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQS4LD5miMTlvTIDfHu2QaLeR94LZbHRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "261522670680-quccnjsq8ds55luergu2aj3s8psbstbk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
