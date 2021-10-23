@@ -59,7 +59,13 @@ public class MainActivity extends AppCompatActivity {
     }
     public void salvar(Pessoa pessoa){
 
-        databaseReference.child("Pessoa").child(maxID()).child("nome").setValue(pessoa.getNome());
+        databaseReference.child("Pessoa").child(
+               pessoa.getId()>0?pessoa.getId().toString():maxID()
+        ).child("nome").setValue(pessoa.getNome());
+    }
+    public void remover(Pessoa pessoa){
+
+        databaseReference.child("Pessoa").child(pessoa.getId()+"").removeValue();
     }
     public String maxID(){
         return (pessoas.get(pessoas.size()-1).getId()+1)+"";
