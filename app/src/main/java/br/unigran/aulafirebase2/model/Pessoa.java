@@ -1,9 +1,17 @@
 package br.unigran.aulafirebase2.model;
 
-public class Pessoa {
+import java.io.Serializable;
+
+public class Pessoa implements Serializable {
     private Integer id;
     private String nome;
     private String telefone;
+Pessoa(){
+
+}
+    public Pessoa(Integer id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -27,5 +35,14 @@ public class Pessoa {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Pessoa{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", telefone='" + telefone + '\'' +
+                '}';
     }
 }

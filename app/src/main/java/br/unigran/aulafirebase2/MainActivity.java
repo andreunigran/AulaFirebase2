@@ -1,9 +1,18 @@
 package br.unigran.aulafirebase2;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -11,31 +20,51 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ForkJoinTask;
 
 import br.unigran.aulafirebase2.model.Pessoa;
 
 public class MainActivity extends AppCompatActivity {
 
-    FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-
+    private ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        firebaseDatabase= FirebaseDatabase.getInstance();
-        databaseReference= firebaseDatabase.getReference();
+
+        databaseReference= DataFirebase.getDatabaseReference();
+        listView=findViewById(R.id.listView);
+        pessoas= new LinkedList<>();
+        listar();
+        }
+    ArrayAdapter arrayAdapter;
+    private void preenche() {
+        if(arrayAdapter==null) {
+            arrayAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item,
+                    pessoas);
+            listView.setAdapter(arrayAdapter);
+        }else
+            arrayAdapter.notifyDataSetChanged();
+
     }
+
+
     List<Pessoa> pessoas;
     public void listar(){
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                pessoas = (List) snapshot.child("Pessoa").getValue(List.class);
-                for (Object o:pessoas){
+                DataSnapshot dataSnapshot = snapshot.child("Pessoa");
+                pessoas.clear();
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Pessoa pessoa = postSnapshot.getValue(Pessoa.class);
+                    pessoas.add(pessoa);
 
                 }
+                preenche();
             }
 
             @Override
@@ -44,11 +73,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void listarSomenteUm(){
+    Pessoa pessoa;
+    public void listarSomenteUm(String id){
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Pessoa pessoa = (Pessoa) snapshot.child("Pessoa").child("1").getValue(Pessoa.class);
+                 pessoa = (Pessoa) snapshot.child("Pessoa").child(id).getValue(Pessoa.class);
             }
 
             @Override
@@ -57,17 +87,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void salvar(Pessoa pessoa){
+    public void novo(View view){
+        Intent it = new Intent(this,Cadastro.class);
+        it.putExtra("Pessoa",new Pessoa(pessoas.size()+1));
+        someActivityResultLauncher.launch(it);
 
-        databaseReference.child("Pessoa").child(
-               pessoa.getId()>0?pessoa.getId().toString():maxID()
-        ).child("nome").setValue(pessoa.getNome());
     }
-    public void remover(Pessoa pessoa){
+    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        doSomeOperations();
+                    }
+                }
+            });
 
-        databaseReference.child("Pessoa").child(pessoa.getId()+"").removeValue();
+    private void doSomeOperations() {
+        listar();
     }
-    public String maxID(){
-        return (pessoas.get(pessoas.size()-1).getId()+1)+"";
-    }
+
 }

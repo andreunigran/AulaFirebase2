@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AulaFirebase2</string>
+    <string name="nome">TextView</string>
 </resources>
