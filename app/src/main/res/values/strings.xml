@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">AulaFirebase2</string>
     <string name="nome">TextView</string>
+    <string name="vazio" />
+    <string name="login">Logar</string>
+    <string name="criar">Registrar Novo</string>
 </resources>
