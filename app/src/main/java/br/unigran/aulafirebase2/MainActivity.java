@@ -6,12 +6,15 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -29,25 +32,32 @@ import br.unigran.aulafirebase2.model.Pessoa;
 public class MainActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
-    private ListView listView;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //recycle view
+        recyclerView=findViewById(R.id.recView);
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        //fim recycle view
 
+        //firebase
         databaseReference= DataFirebase.getDatabaseReference();
-        listView=findViewById(R.id.listView);
+
         pessoas= new LinkedList<>();
+        //chamada firebase
         listar();
-        }
-    ArrayAdapter arrayAdapter;
+
+    }
+    PessoaAdapter pessoaAdapter;
     private void preenche() {
-        if(arrayAdapter==null) {
-            arrayAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item,
-                    pessoas);
-            listView.setAdapter(arrayAdapter);
-        }else
-            arrayAdapter.notifyDataSetChanged();
+        pessoaAdapter= new PessoaAdapter(pessoas);
+        recyclerView.setAdapter(pessoaAdapter);
 
     }
 
@@ -66,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 preenche();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
