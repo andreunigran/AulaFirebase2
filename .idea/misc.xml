@@ -9,7 +9,16 @@
         <entry key="app/src/main/res/layout/activity_cadastro.xml" value="0.17958459979736577" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17958459979736577" />
+        <entry key="app/src/main/res/layout/activity_menu_principal.xml" value="0.26979166666666665" />
+        <entry key="app/src/main/res/layout/app_bar_menu.xml" value="0.22916666666666666" />
+        <entry key="app/src/main/res/layout/content_menu.xml" value="0.26979166666666665" />
+        <entry key="app/src/main/res/layout/fragmento_principal.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/header_navigation_drawer.xml" value="0.26979166666666665" />
         <entry key="app/src/main/res/layout/linhas.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/nav_header.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/nav_header_menu.xml" value="0.22916666666666666" />
+        <entry key="app/src/main/res/menu/menu_principal.xml" value="0.18518518518518517" />
+        <entry key="app/src/main/res/menu/nav_menu.xml" value="0.26979166666666665" />
       </map>
     </option>
   </component>
