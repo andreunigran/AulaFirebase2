@@ -4,4 +4,6 @@
     <string name="vazio" />
     <string name="login">Logar</string>
     <string name="criar">Registrar Novo</string>
+    <string name="NovoItem">Novo</string>
+    <string name="sobre">Sobre</string>
 </resources>

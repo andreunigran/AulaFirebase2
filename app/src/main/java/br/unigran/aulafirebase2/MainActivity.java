@@ -12,10 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,6 +38,25 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.novoItem:
+                novo();
+            break;
+            case R.id.sobreItem:
+                Toast.makeText(MainActivity.this,"Sobre",Toast.LENGTH_LONG).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,11 +119,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void novo(View view){
+        novo();
+
+    }
+    private void novo(){
         Intent it = new Intent(this,Cadastro.class);
         it.putExtra("Pessoa",new Pessoa(pessoas.size()+1));
         someActivityResultLauncher.launch(it);
 
     }
+
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
